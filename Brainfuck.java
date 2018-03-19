@@ -2,7 +2,7 @@
 import java.io.*;
 import java.util.ArrayList;
 
-public class BrainFuck {
+public class Brainfuck {
 
     private String _program;
     private ArrayList<Integer> _registers;
@@ -27,11 +27,11 @@ public class BrainFuck {
             return;
         }
         try {
-            BrainFuck bf;
+            Brainfuck bf;
             if (args.length == 1) {
-                bf = new BrainFuck(args[0]);
+                bf = new Brainfuck(args[0]);
             } else {
-                bf = new BrainFuck(args[1], args[0]);
+                bf = new Brainfuck(args[1], args[0]);
             }
             System.out.println(bf.run());
         } catch (Exception e) {
@@ -40,11 +40,11 @@ public class BrainFuck {
         }
     }
 
-    public BrainFuck(String program) throws Exception {
+    public Brainfuck(String program) throws Exception {
         this(program, TYPE_TEXT);
     }
 
-    public BrainFuck(String input, String type) throws Exception {
+    public Brainfuck(String input, String type) throws Exception {
         switch(type) {
             case TYPE_FILE:
                 _program = _getProgram(input);
