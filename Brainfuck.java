@@ -1,9 +1,8 @@
-
 import java.io.*;
 import java.util.ArrayList;
 
-public class Brainfuck {
-
+public class Brainfuck
+{
     private String _program;
     private ArrayList<Integer> _registers;
     private int _registerPointer = 0;
@@ -21,7 +20,8 @@ public class Brainfuck {
     public static final char COM_JMP_FOR = '[';
     public static final char COM_JMP_BACK = ']';
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         if (args.length == 0) {
             System.out.println("Invalid args.");
             return;
@@ -40,11 +40,13 @@ public class Brainfuck {
         }
     }
 
-    public Brainfuck(String program) throws Exception {
+    public Brainfuck(String program) throws Exception
+    {
         this(program, TYPE_TEXT);
     }
 
-    public Brainfuck(String input, String type) throws Exception {
+    public Brainfuck(String input, String type) throws Exception
+    {
         switch(type) {
             case TYPE_FILE:
                 _program = _getProgram(input);
@@ -58,7 +60,8 @@ public class Brainfuck {
         _registers = new ArrayList<>(INIT_REG_SIZE);
     }
 
-    public String run() throws Exception {
+    public String run() throws Exception
+    {
         String output = "";
         do {
             char command = getCurrentCommand();
@@ -129,7 +132,8 @@ public class Brainfuck {
         return output;
     }
 
-    private String _getProgram(String filePath) throws FileNotFoundException, IOException {
+    private String _getProgram(String filePath) throws FileNotFoundException, IOException
+    {
         String result;
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             StringBuilder sb = new StringBuilder();
@@ -143,32 +147,39 @@ public class Brainfuck {
         return result;
     }
 
-    public char getCurrentCommand() {
+    public char getCurrentCommand()
+    {
         return _program.charAt(_programPointer);
     }
 
-    public boolean atEnd() {
+    public boolean atEnd()
+    {
         return _programPointer == _program.length() - 1;
     }
 
-    protected void setRegisterValue(int value) {
+    protected void setRegisterValue(int value)
+    {
         setRegisterValue(_registerPointer, value);
     }
 
-    protected void setRegisterValue(int index, int value) {
+    protected void setRegisterValue(int index, int value)
+    {
         _expandRegister(index + 1);
         _registers.set(index, value);
     }
 
-    protected int getRegisterValue() {
+    protected int getRegisterValue()
+    {
         return getRegisterValue(_registerPointer);
     }
-    protected int getRegisterValue(int index) {
+    protected int getRegisterValue(int index)
+    {
         _expandRegister(index + 1);
         return _registers.get(index);
     }
 
-    private void _expandRegister(int size) {
+    private void _expandRegister(int size)
+    {
         _registers.ensureCapacity(size);
         int registerSize = _registers.size();
         if (registerSize < size) {
@@ -178,7 +189,8 @@ public class Brainfuck {
         }
     }
 
-    public int decrementProgramPointer() throws Exception {
+    public int decrementProgramPointer() throws Exception
+    {
         _programPointer--;
         if (_programPointer < 0) {
             throw new Exception("Invalid program pointer (" + _programPointer + ").");
@@ -186,7 +198,8 @@ public class Brainfuck {
         return _programPointer;
     }
 
-    public int incrementProgramPointer() throws Exception {
+    public int incrementProgramPointer() throws Exception
+    {
         _programPointer++;
         if (_programPointer >= _program.length()) {
             throw new Exception("Invalid program pointer (" + _programPointer + ").");
@@ -194,23 +207,27 @@ public class Brainfuck {
         return _programPointer;
     }
 
-    public int decrementRegisterValue() {
+    public int decrementRegisterValue()
+    {
         int newValue = getRegisterValue() - 1;
         setRegisterValue(newValue);
         return newValue;
     }
 
-    public int incrementRegisterValue() {
+    public int incrementRegisterValue()
+    {
         int newValue = getRegisterValue() + 1;
         setRegisterValue(newValue);
         return newValue;
     }
 
-    public int decrementRegisterPointer() {
+    public int decrementRegisterPointer()
+    {
         return --_registerPointer;
     }
 
-    public int incrementRegisterPointer() {
+    public int incrementRegisterPointer()
+    {
         return ++_registerPointer;
     }
 
